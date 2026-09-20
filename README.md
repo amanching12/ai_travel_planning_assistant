@@ -430,19 +430,3 @@ python -m scripts.ingest
 ```
 
 The knowledge-base markdown files are included in the project so that evaluators can run the app without crawling or downloading content separately.
-
-## Submission checklist
-
-Before final submission:
-
-```text
-Update GitHub repo link in this README.
-Update demo video link in this README.
-Create ZIP with the complete project.
-Name the ZIP as Name_Empcode_AI Travel Planning Assistant.zip.
-Upload the ZIP to OneDrive.
-Keep OneDrive access public.
-Submit the OneDrive link in the official form.
-```
-
-```
