@@ -16,13 +16,13 @@ The main goal is to show how RAG and MCP can work together in one application.
 GitHub Repository:
 
 ```text
-<add your public GitHub repo link here>
+https://github.com/amanching12/ai_travel_planning_assistant
 ````
 
 Demo Video:
 
 ```text
-<add your demo video link here>
+https://nagarro-my.sharepoint.com/:v:/p/aman_kumar12/IQCejqnqHvPhTIjSANhJRS-EAV_pG3cnFw2iEFKssUCJf5I?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=a1369W
 ```
 
 ## What the app can do
