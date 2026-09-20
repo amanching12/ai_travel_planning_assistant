@@ -1,0 +1,15 @@
+Candidate Name: Aman Kumar
+Employee Code: 3210294
+Assignment Name: AI Travel Planning Assistant
+
+Git Repository URL:
+<replace_with_git_repository_url>
+
+Application:
+Run locally at http://127.0.0.1:8000 after following README setup.
+
+Knowledge Base:
+Available in the knowledge_base folder with source metadata.
+
+Demo:
+Follow DEMO_SCRIPT.md and samples/sample_responses.md.

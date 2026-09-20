@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Travel Planning Assistant</title>
+  <style>
+    :root { --bg:#0f172a; --panel:#111827; --card:#1f2937; --text:#f8fafc; --muted:#94a3b8; --accent:#38bdf8; --green:#22c55e; --border:#334155; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Segoe UI, Roboto, Arial, sans-serif; background:linear-gradient(135deg,#0f172a,#111827); color:var(--text); min-height:100vh; }
+    header { padding:28px 20px; text-align:center; border-bottom:1px solid var(--border); }
+    header h1 { margin:0 0 8px; font-size:32px; }
+    header p { margin:0; color:var(--muted); }
+    main { max-width:1100px; margin:0 auto; padding:24px; display:grid; grid-template-columns:320px 1fr; gap:20px; }
+    .panel, .chat { background:rgba(17,24,39,.92); border:1px solid var(--border); border-radius:18px; box-shadow:0 18px 50px rgba(0,0,0,.25); }
+    .panel { padding:18px; height:max-content; }
+    .panel h2 { margin:0 0 12px; font-size:16px; }
+    .sample { width:100%; margin:7px 0; padding:10px; border:1px solid var(--border); border-radius:10px; background:#0b1220; color:var(--text); cursor:pointer; text-align:left; line-height:1.35; }
+    .sample:hover { border-color:var(--accent); }
+    .chat { min-height:680px; display:flex; flex-direction:column; overflow:hidden; }
+    #messages { padding:18px; flex:1; overflow:auto; }
+    .msg { padding:14px; border-radius:14px; margin-bottom:14px; white-space:pre-wrap; line-height:1.55; }
+    .user { background:#075985; margin-left:12%; }
+    .assistant { background:#1f2937; border:1px solid var(--border); margin-right:6%; }
+    .meta { color:var(--muted); font-size:12px; margin-top:8px; }
+    .composer { display:flex; gap:10px; padding:16px; border-top:1px solid var(--border); background:#0b1220; }
+    textarea { flex:1; resize:none; min-height:54px; max-height:140px; border-radius:12px; border:1px solid var(--border); background:#020617; color:var(--text); padding:12px; font-size:14px; }
+    button.primary { border:none; border-radius:12px; background:var(--accent); color:#082f49; padding:0 18px; font-weight:700; cursor:pointer; }
+    .badge { display:inline-block; background:rgba(34,197,94,.12); color:#86efac; border:1px solid rgba(34,197,94,.3); padding:4px 9px; border-radius:999px; font-size:12px; margin-top:10px; }
+    @media(max-width:860px){ main{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<header>
+  <h1>AI Travel Planning Assistant</h1>
+  <p>Singapore RAG knowledge base + MCP weather and currency tools</p>
+</header>
+<main>
+  <section class="panel">
+    <h2>Sample questions</h2>
+    <button class="sample">What are the must-visit attractions in Singapore?</button>
+    <button class="sample">Which neighbourhoods are suitable for cultural experiences?</button>
+    <button class="sample">What is the weather in Singapore for the next three days?</button>
+    <button class="sample">Convert INR 60000 to SGD and suggest a three-day itinerary.</button>
+    <button class="sample">Create a three-day Singapore itinerary for next week and adjust it according to the weather forecast.</button>
+    <button class="sample">I am travelling with children. Suggest indoor activities if rain is expected.</button>
+    <span class="badge">Multi-turn context retained per browser session</span>
+  </section>
+  <section class="chat">
+    <div id="messages"></div>
+    <div class="composer">
+      <textarea id="input" placeholder="Ask about Singapore attractions, weather, currency, or itinerary..."></textarea>
+      <button class="primary" onclick="sendMessage()">Send</button>
+    </div>
+  </section>
+</main>
+<script>
+let sessionId = localStorage.getItem('travel_session_id') || null;
+const messages = document.getElementById('messages');
+const input = document.getElementById('input');
+
+document.querySelectorAll('.sample').forEach(btn => {
+  btn.addEventListener('click', () => { input.value = btn.textContent; sendMessage(); });
+});
+
+function addMessage(text, cls, meta='') {
+  const div = document.createElement('div');
+  div.className = `msg ${cls}`;
+  div.textContent = text;
+  if (meta) {
+    const m = document.createElement('div');
+    m.className = 'meta';
+    m.textContent = meta;
+    div.appendChild(m);
+  }
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function sendMessage() {
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addMessage(text, 'user');
+  addMessage('Thinking...', 'assistant', 'Retrieving knowledge and selecting MCP tools');
+  const loading = messages.lastChild;
+  try {
+    const resp = await fetch('/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({message:text, session_id:sessionId})
+    });
+    const data = await resp.json();
+    sessionId = data.session_id;
+    localStorage.setItem('travel_session_id', sessionId);
+    loading.remove();
+    const sources = (data.sources || []).map(s => s.title).join(', ') || 'No source';
+    addMessage(data.answer, 'assistant', `Mode: ${data.mode} | Sources: ${sources}`);
+  } catch (e) {
+    loading.remove();
+    addMessage('Unable to process the request. Please check that the API is running.', 'assistant');
+  }
+}
+
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+addMessage('Hello. Ask me to plan a Singapore trip, check weather, convert budget, or combine all three.', 'assistant');
+</script>
+</body>
+</html>
