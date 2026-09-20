@@ -17,7 +17,7 @@ GitHub Repository:
 
 ```text
 https://github.com/amanching12/ai_travel_planning_assistant
-````
+```
 
 Demo Video:
 
