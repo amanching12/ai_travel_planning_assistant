@@ -1,15 +1,17 @@
+Hi Team,
+
+Please find my AI Travel planning assistant assignment submission details below:
+
 Candidate Name: Aman Kumar
 Employee Code: 3210294
 Assignment Name: AI Travel Planning Assistant
 
-Git Repository URL:
-<replace_with_git_repository_url>
+Source Code Repository URL:
+https://github.com/amanching12/ai_travel_planning_assistant
 
-Application:
-Run locally at http://127.0.0.1:8000 after following README setup.
 
-Knowledge Base:
-Available in the knowledge_base folder with source metadata.
+Screen Recording URL: 
+https://nagarro-my.sharepoint.com/:v:/p/aman_kumar12/IQCejqnqHvPhTIjSANhJRS-EAV_pG3cnFw2iEFKssUCJf5I?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=a1369W
 
-Demo:
-Follow DEMO_SCRIPT.md and samples/sample_responses.md.
+Regards,
+Aman Kumar
